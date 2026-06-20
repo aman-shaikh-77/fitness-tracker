@@ -3,6 +3,7 @@ package com.project.fitness.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class Recommendation {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -35,11 +37,17 @@ public class Recommendation {
 
     @Column(length = 2000)
     private String recommendation;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "json")
     private List<String> improvements;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "json")
     private List<String> suggestions;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "json")
     private List<String> safety;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
