@@ -5,6 +5,8 @@ import com.project.fitness.dto.ActivityResponse;
 import com.project.fitness.service.ActivityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +24,10 @@ public class ActivityController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ActivityResponse>> getUserActivities(String userId){
+    public ResponseEntity<List<ActivityResponse>> getUserActivities(
+            @AuthenticationPrincipal UserDetails userDetails) {
+        // FIX: extract userId from the verified JWT principal, not a query param
+        String userId = userDetails.getUsername();
         return ResponseEntity.ok(activityService.getUserActivities(userId));
     }
 }
