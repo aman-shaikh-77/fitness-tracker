@@ -8,6 +8,7 @@ import com.project.fitness.model.User;
 import com.project.fitness.repository.UserRepository;
 import com.project.fitness.securty.JwtUtils;
 import com.project.fitness.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
             User user = userService.authenticate(loginRequest);
 
